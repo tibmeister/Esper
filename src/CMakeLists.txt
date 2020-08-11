@@ -9,7 +9,6 @@ set(COMPONENT_ADD_INCLUDEDIRS
 
 set(COMPONENT_REQUIRES
     esp32-camera
-    esp-idf-ssd1306
     mdns
     nvs_flash
     esp_http_server
