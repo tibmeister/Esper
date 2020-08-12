@@ -3,22 +3,22 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>ESP32 Camera</title>
+        <title>Esper</title>
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
         <section id="main">
             <section id="header">
-                <h2 id="page-title">ESP32 Camera</h2>
-                <nav id="maintoolbar">  
+                <h2 id="page-title">Esper</h2>
+                <nav id="maintoolbar">
                     <button id="get-still">Capture Still Image</button>
                     <button id="toggle-stream">Start Stream</button>
                 </nav>
             </section>
             <section id="content">
                 <section id="sidebar">
-                    
+
                     <!-- Basic Settings Menu -->
                     <div id="basic-settings-label" class="settings-label">
                         <label for="nav-toggle-basic-cb" class="nav-toggle">&#9776;&nbsp;&nbsp;Basic Settings</label>
@@ -27,7 +27,7 @@
                     <nav id="basic-menu" class="menu">
                         <div class="input-group" id="framesize-group">
                             <label for="framesize">Resolution</label>
-                            <select id="framesize" class="default-action">  
+                            <select id="framesize" class="default-action">
                                 <option value="10">UXGA(1600x1200)</option>
                                 <option value="9">SXGA(1280x1024)</option>
                                 <option value="8">XGA(1024x768)</option>
@@ -158,13 +158,13 @@
                         <div class="input-group" id="dns2-group">
                             <label for="dns2">DNS 2</label>
                             <input type="text" id="dns2" maxlength="15" class="default-action">
-                        </div>      
-                    </nav>        
+                        </div>
+                    </nav>
 
                     <!-- Advanced Settings Menu -->
                     <div id="advanced-settings-label" class="settings-label">
                         <label for="nav-toggle-adv-cb" class="nav-toggle">&#9776;&nbsp;&nbsp;Advanced Settings</label>
-                    </div>                    
+                    </div>
                     <input type="checkbox" id="nav-toggle-adv-cb" class="nav-toggle-cb">
                     <nav id="adv-menu" class="menu">
                         <div class="input-group" id="awb-group">
@@ -262,7 +262,7 @@
                       <button id="refresh-settings">Retrieve Settings</button>
                       <button id="store-settings">Save Settings</button>
                       <button id="reboot-camera">Reboot Camera</button> <!-- Reboot does not work -->
-                    </nav>  
+                    </nav>
 
                 </section> <!-- sidebar -->
                 <figure>
