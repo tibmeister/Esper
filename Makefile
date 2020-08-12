@@ -3,6 +3,6 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := Esper
+PROJECT_NAME := esper
 
 include $(IDF_PATH)/make/project.mk
