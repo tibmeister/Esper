@@ -20,6 +20,7 @@ static void log_settings()
   ESP_LOGI(TAG, " mdns_instance=%s", settings.mdns_instance);
   ESP_LOGI(TAG, " ntp_server=%s", settings.ntp_server);
   ESP_LOGI(TAG, " timezone=%s", settings.timezone);
+  ESP_LOGI(TAG, " ota_url=%s", settings.ota_url);
   ESP_LOGI(TAG, " dhcp=%u", settings.dhcp);
   ESP_LOGI(TAG, " ip=%s", ip4addr_ntoa(&settings.ip));
   ESP_LOGI(TAG, " netmask=%s", ip4addr_ntoa(&settings.netmask));
@@ -47,6 +48,7 @@ void app_settings_reset()
   strncpy(settings.mdns_instance, CONFIG_MDNS_INSTANCE, LEN_MDNS_INSTANCE);
   strncpy(settings.ntp_server, CONFIG_NTP_SERVER, LEN_NTP_SERVER);
   strncpy(settings.timezone, CONFIG_TIMEZONE, LEN_TIMEZONE);
+  strncpy(settings.ota_url,CONFIG_FIRMWARE_UPGRADE_URL, LEN_OTA_URL);
   settings.dhcp = true;
 }
 

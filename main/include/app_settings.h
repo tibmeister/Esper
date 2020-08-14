@@ -9,6 +9,7 @@
 #define LEN_MDNS_INSTANCE 32
 #define LEN_NTP_SERVER    32
 #define LEN_TIMEZONE      32
+#define LEN_OTA_URL       512
 
 struct app_settings_t
 {
@@ -19,6 +20,7 @@ struct app_settings_t
   char mdns_instance[LEN_MDNS_INSTANCE];
   char ntp_server[LEN_NTP_SERVER];
   char timezone[LEN_TIMEZONE];
+  char ota_url[LEN_OTA_URL];
   bool dhcp;
   ip4_addr_t ip;
   ip4_addr_t netmask;

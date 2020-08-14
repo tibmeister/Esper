@@ -9,7 +9,7 @@ menu "OTA Configuration"
         string "Firmware Upgrade URL"
         default ""
         help
-            URL of server which hosts the firmware image.
+            URL of server which hosts the firmware image.  Max of 512 char long
 
     config FIRMWARE_UPGRADE_URL_FROM_STDIN
         bool
