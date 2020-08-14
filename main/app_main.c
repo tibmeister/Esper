@@ -11,6 +11,8 @@
 #include "esp_ota_ops.h"
 #include "mdns.h"
 #include "app_sntp.h"
+#include "app_settings.h"
+#include "app_wifi.h"
 
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
 #include "esp_log.h"

@@ -52,37 +52,52 @@ void app_settings_reset()
 
 void app_settings_save()
 {
+  //Get a handle and error object to work with
   nvs_handle_t handle;
   esp_err_t    ret;
 
+  //Open nvs in RW mode
   ret = nvs_open(NVS_KEY, NVS_READWRITE, &handle);
+
   if (ret == ESP_OK)
   {
+    //Opened ok
     settings.size = sizeof(settings);
+
     ret = nvs_set_blob(handle, "settings", &settings, sizeof(settings));
+
     if (ret == ESP_OK)
     {
+      //Life is good, our settings are saved
       nvs_commit(handle);
       ESP_LOGI(TAG, "Saved settings to NVS");
       log_settings();
     }
     else
     {
-      ESP_LOGE(TAG, "Error (%d) saving settings to NVS", ret);
+      //Couldn't save the settings, spit out the log
+      ESP_LOGE(TAG, "Error saving settings to NVS: %s", esp_err_to_name(ret));
     }
+
+    //Time to close the NVS
     nvs_close(handle);
   }
   else
   {
-    ESP_LOGE(TAG, "Error (%d) opening settings", ret);
+    //NVS couldn't be opened, spit out the log
+    ESP_LOGE(TAG, "Error opening settings: %s", esp_err_to_name(ret));
   }
 }
 
 void app_settings_startup()
 {
+  //Create handle for NVS storage
   nvs_handle_t handle;
 
+  //Initialize the default partition labeled "nvs"
   esp_err_t ret = nvs_flash_init();
+
+  //Check if things were good, otherwise wipe and start clean
   if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
       ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
   {
@@ -94,34 +109,48 @@ void app_settings_startup()
 
   ESP_LOGI(TAG, "NVS Flash Init");
 
+  //Open the nvs storage in RO mode
   ret = nvs_open(NVS_KEY, NVS_READONLY, &handle);
 
+  //If it opened ok, then let's get the data into our settings struct
   if (ret == ESP_OK)
   {
     size_t size = sizeof(settings);
+
     ret = nvs_get_blob(handle, "settings", &settings, &size);
+
     if (ret == ESP_OK)
     {
+      //Check to make sure our sizes match
       if (settings.size == sizeof(settings))
       {
+        //If they do, then log it
         ESP_LOGI(TAG, "Settings loaded from NVS");
         log_settings();
       }
       else
       {
+        //Sizes didn't match, so something may have changed so report it and load defaults
+        ESP_LOGE(TAG, "Settings size did not match, nothing loaded");
         app_settings_reset();
         app_settings_save();
       }
     }
     else
     {
+      //Couldn't get the blob, so log the error and factory reset the nvs
+      ESP_LOGE(TAG, "NVS blob retrieval error: %s", esp_err_to_name(ret));
       app_settings_reset();
       app_settings_save();
     }
+
+    //All done, so close NVS
     nvs_close(handle);
   }
   else
   {
+    //NVS couldn't be opened, factory reset time
+    ESP_LOGE(TAG, "Error opening NVS: %s", esp_err_to_name(ret));
     app_settings_reset();
     app_settings_save();
   }
