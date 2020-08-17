@@ -14,6 +14,7 @@
 struct app_settings_t
 {
   int size;
+  int version;
   char wifi_ssid[LEN_WIFI_SSID];
   char wifi_password[LEN_WIFI_PASSWORD];
   char hostname[LEN_HOSTNAME];
