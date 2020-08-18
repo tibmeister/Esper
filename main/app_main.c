@@ -61,5 +61,10 @@ static const char *humanSize(uint64_t bytes)
 void app_main()
 {
   app_settings_startup();
+
+  //Initialize the event subsystem
+  ESP_ERROR_CHECK(esp_event_loop_create_default());
+  event_group = xEventGroupCreate();
+
   app_wifi_startup();
 }
