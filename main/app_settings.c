@@ -14,7 +14,7 @@ static const char *NVS_KEY = "settings";
 
 static void log_settings()
 {
-  ESP_LOGI(TAG, " config version=%s", settings.version);
+  ESP_LOGI(TAG, " config version=%i", settings.version);
   ESP_LOGI(TAG, " hostname=%s", settings.hostname);
   ESP_LOGI(TAG, " wifi_ssid=%s", settings.wifi_ssid);
   ESP_LOGI(TAG, " wifi_password=%s", settings.wifi_password);
