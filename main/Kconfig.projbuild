@@ -5,15 +5,6 @@ menu "OTA Configuration"
         help
             Should OTA be used
 
-    config CONFIG_VERSION
-        int "Configuration Schema Version"
-        default "1"
-        help
-            Configuration Schema Version Number tells us what version of the settings schema is.
-            This will change when the struct for the settings changes, enabling us to know when
-            we need to upgrade the version in NVRAM from previous versions without loosing the stored
-            data.
-
     config FIRMWARE_UPGRADE_URL
         string "Firmware Upgrade URL"
         default ""
