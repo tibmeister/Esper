@@ -14,7 +14,7 @@ static const char *NVS_KEY = "settings";
 
 static void log_settings()
 {
-  ESP_LOGI(TAG, " config version=%d", settings.version);
+  ESP_LOGI(TAG, " config_version=%d", settings.version);
   ESP_LOGI(TAG, " hostname=%s", settings.hostname);
   ESP_LOGI(TAG, " wifi_ssid=%s", settings.wifi_ssid);
   ESP_LOGI(TAG, " wifi_password=%s", settings.wifi_password);
@@ -43,6 +43,7 @@ void app_settings_reset()
 
   ESP_LOGI(TAG, "Restoring default settings");
   memset(&settings, 0, sizeof(settings));
+  strncpy(settings.version, CONFIG_CONFIG_VERSION, sizeof(int));
   strncpy(settings.wifi_ssid, CONFIG_ESP_WIFI_SSID, LEN_WIFI_SSID);
   strncpy(settings.wifi_password, CONFIG_ESP_WIFI_PASSWORD, LEN_WIFI_PASSWORD);
   strncpy(settings.hostname, CONFIG_LWIP_LOCAL_HOSTNAME, LEN_HOSTNAME);

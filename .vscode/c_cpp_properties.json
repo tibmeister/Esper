@@ -4,12 +4,14 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/jody/esp/esp-idf-v4.0.1/**"
+                "/home/jody/esp/esp-idf-v4.0.1/**",
+                "/home/jody/.espressif/**"
             ],
             "browse": {
                 "path": [
                     "${workspaceFolder}/**",
-                    "/home/jody/esp/esp-idf-v4.0.1/**"
+                    "/home/jody/esp/esp-idf-v4.0.1/**",
+                    "/home/jody/.espressif/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
