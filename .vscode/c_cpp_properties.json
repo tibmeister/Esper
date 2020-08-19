@@ -3,8 +3,17 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/jody/esp/esp-idf-v4.0.1/**"
             ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "/home/jody/esp/esp-idf-v4.0.1/**"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",

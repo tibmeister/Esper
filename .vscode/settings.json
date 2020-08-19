@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "esp_ota_ops.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
 }
