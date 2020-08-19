@@ -3,6 +3,7 @@ set(COMPONENT_SRCS
     "app_settings.c"
     "app_sntp.c"
     "app_wifi.c"
+    "app_ota.c"
 )
 
 set(COMPONENT_ADD_INCLUDEDIRS
