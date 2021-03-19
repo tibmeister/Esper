@@ -22,6 +22,7 @@
 #define HASH_LEN 32 /* SHA-256 digest length */
 static const char *TAG = "application_main";
 EventGroupHandle_t event_group;
+#define TEST 13
 
 static void print_sha256 (const uint8_t *image_hash, const char *label)
 {
