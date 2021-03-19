@@ -64,6 +64,8 @@ void app_settings_save()
   if (ret == ESP_OK)
   {
     //Opened ok
+    ESP_LOGI(TAG, "NVS Opened in RW mode");
+
     settings.size = sizeof(settings);
 
     ret = nvs_set_blob(handle, "settings", &settings, sizeof(settings));
@@ -117,6 +119,8 @@ void app_settings_startup()
   //If it opened ok, then let's get the data into our settings struct
   if (ret == ESP_OK)
   {
+    ESP_LOGI(TAG, "NVS Opened in RO Mode");
+
     size_t size = sizeof(settings);
 
     ret = nvs_get_blob(handle, "settings", &settings, &size);

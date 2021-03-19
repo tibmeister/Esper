@@ -13,6 +13,8 @@
 #include "app_sntp.h"
 #include "app_settings.h"
 #include "app_wifi.h"
+#include "app_ota.h"
+#include <string.h>
 
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
 #include "esp_log.h"
@@ -60,11 +62,76 @@ static const char *humanSize(uint64_t bytes)
 
 void app_main()
 {
-  app_settings_startup();
+  uint8_t sha_256[HASH_LEN] = { 0 };
+  esp_partition_t partition;
 
-  //Initialize the event subsystem
+  // get sha256 digest for the partition table
+  partition.address   = ESP_PARTITION_TABLE_OFFSET;
+  partition.size      = ESP_PARTITION_TABLE_MAX_LEN;
+  partition.type      = ESP_PARTITION_TYPE_DATA;
+  esp_partition_get_sha256(&partition, sha_256);
+  print_sha256(sha_256, "SHA-256 for the partition table: ");
+
+  // get sha256 digest for bootloader
+  partition.address   = ESP_BOOTLOADER_OFFSET;
+  partition.size      = ESP_PARTITION_TABLE_OFFSET;
+  partition.type      = ESP_PARTITION_TYPE_APP;
+  esp_partition_get_sha256(&partition, sha_256);
+  print_sha256(sha_256, "SHA-256 for bootloader: ");
+
+  // get sha256 digest for running partition
+  esp_partition_get_sha256(esp_ota_get_running_partition(), sha_256);
+  print_sha256(sha_256, "SHA-256 for current firmware: ");
+
+  // If we've gotten this far it's far to assume we are good to go
+  const esp_partition_t *running = esp_ota_get_running_partition();
+  esp_ota_img_states_t ota_state;
+
+  esp_err_t errRb = esp_ota_mark_app_valid_cancel_rollback();
+
+  if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK)
+  {
+    if(ota_state == ESP_OTA_IMG_PENDING_VERIFY)
+    {
+        ESP_LOGI(TAG, "Update was successful, switching to run this going forward");
+        esp_err_t errRb = esp_ota_mark_app_valid_cancel_rollback();
+        ESP_LOGE(TAG,"Return Code: %s", esp_err_to_name(errRb));
+    }
+    else
+    {
+        ESP_LOGE(TAG, "OTA State is %s", esp_err_to_name(ota_state));
+        ESP_LOGE(TAG, "Update was not sucessful, rolling back the firmware and rebooting");
+        esp_err_t errRb = esp_ota_mark_app_invalid_rollback_and_reboot();
+        ESP_LOGE(TAG,"Return Code: %s", esp_err_to_name(errRb));
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
+    }
+  }
+
+  // Pause so things can be read
+  vTaskDelay(10000 / portTICK_PERIOD_MS);
+
+  EventBits_t uxBits;
+
+  // xTaskCreate(&heap_debug_task,"heap_debug_task",2048,NULL,5,NULL);
+
   ESP_ERROR_CHECK(esp_event_loop_create_default());
   event_group = xEventGroupCreate();
 
+  app_settings_startup();
+  // app_settings_reset();
+  // app_settings_save();
+
   app_wifi_startup();
+
+  for (;;)
+  {
+    uxBits = xEventGroupWaitBits(event_group, WIFI_CONNECTED_BIT | WIFI_SOFTAP_BIT, pdFALSE, pdFALSE, 500 / portTICK_PERIOD_MS);
+    if (uxBits > 0)
+    {
+      ota_init();
+      return;
+    }
+  }
+
+  esp_register_shutdown_handler(&app_shutdown);
 }
