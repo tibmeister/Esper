@@ -19,9 +19,11 @@
 #include <string.h>
 
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
+
 #include "esp_log.h"
 
 #define HASH_LEN 32 /* SHA-256 digest length */
+
 static const char *TAG = "application_main";
 EventGroupHandle_t event_group;
 
