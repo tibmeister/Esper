@@ -89,7 +89,7 @@ void app_main()
 
   //esp_err_t errRb = esp_ota_mark_app_valid_cancel_rollback();
 
-  printf("\nThe current OTA state is\n%i\n\n",ota_state);
+  //printf("\nThe current OTA state is\n%i\n\n",ota_state);
 
   if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK)
   {
