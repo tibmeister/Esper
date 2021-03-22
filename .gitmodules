@@ -2,3 +2,7 @@
 	path = components/esp32-camera
 	url = https://github.com/espressif/esp32-camera.git
 	branch = master
+
+[submodule "components/Micro-RTSP"]
+	path = components/Micro-RTSP
+	url = https://github.com/geeksville/Micro-RTSP.git
