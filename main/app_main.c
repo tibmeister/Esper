@@ -87,7 +87,9 @@ void app_main()
   const esp_partition_t *running = esp_ota_get_running_partition();
   esp_ota_img_states_t ota_state;
 
-  esp_err_t errRb = esp_ota_mark_app_valid_cancel_rollback();
+  //esp_err_t errRb = esp_ota_mark_app_valid_cancel_rollback();
+
+  printf("\nThe current OTA state is\n%i\n\n",ota_state);
 
   if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK)
   {
