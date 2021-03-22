@@ -14,6 +14,7 @@
 #include "app_settings.h"
 #include "app_wifi.h"
 #include "app_ota.h"
+#include "app_httpd.h"
 #include <string.h>
 
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
@@ -38,6 +39,7 @@ static void print_sha256 (const uint8_t *image_hash, const char *label)
 void app_shutdown()
 {
   app_settings_shutdown();
+  app_httpd_shutdown();
   app_wifi_shutdown();
 }
 
@@ -131,6 +133,7 @@ void app_main()
     if (uxBits > 0)
     {
       ota_init();
+      app_httpd_startup();
       return;
     }
   }
