@@ -125,7 +125,7 @@ void app_main()
 
   app_settings_startup();
   app_camera_startup();
-* // app_settings_reset();
+  // app_settings_reset();
   // app_settings_save();
 
   app_wifi_startup();
