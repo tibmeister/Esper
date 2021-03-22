@@ -15,6 +15,7 @@
 #include "app_wifi.h"
 #include "app_ota.h"
 #include "app_httpd.h"
+#include "app_camera.h"
 #include <string.h>
 
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
@@ -41,6 +42,7 @@ void app_shutdown()
   app_settings_shutdown();
   app_httpd_shutdown();
   app_wifi_shutdown();
+  app_camera_shutdown();
 }
 
 static const char *humanSize(uint64_t bytes)
@@ -122,7 +124,8 @@ void app_main()
   event_group = xEventGroupCreate();
 
   app_settings_startup();
-  // app_settings_reset();
+  app_camera_startup();
+* // app_settings_reset();
   // app_settings_save();
 
   app_wifi_startup();
