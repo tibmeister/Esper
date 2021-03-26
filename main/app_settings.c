@@ -105,6 +105,8 @@ void app_settings_startup()
   if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
       ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
   {
+    ESP_LOGE(TAG,"Flash init failed: %s", esp_err_to_name(ret));
+
     ESP_ERROR_CHECK(nvs_flash_erase());
     ret = nvs_flash_init();
   }
