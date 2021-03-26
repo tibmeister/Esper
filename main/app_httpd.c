@@ -207,19 +207,23 @@ static esp_err_t stream_handler(httpd_req_t *req)
                 _jpg_buf = fb->buf;
             }
         }
+
+        if (res == ESP_OK)
+        {
+            res = httpd_resp_send_chunk(req, _STREAM_BOUNDARY, strlen(_STREAM_BOUNDARY));
+        }
+
         if (res == ESP_OK)
         {
             size_t hlen = snprintf((char *)part_buf, 64, _STREAM_PART, _jpg_buf_len);
             res = httpd_resp_send_chunk(req, (const char *)part_buf, hlen);
         }
+
         if (res == ESP_OK)
         {
             res = httpd_resp_send_chunk(req, (const char *)_jpg_buf, _jpg_buf_len);
         }
-        if (res == ESP_OK)
-        {
-            res = httpd_resp_send_chunk(req, _STREAM_BOUNDARY, strlen(_STREAM_BOUNDARY));
-        }
+
         if (fb)
         {
             esp_camera_fb_return(fb);
@@ -231,10 +235,12 @@ static esp_err_t stream_handler(httpd_req_t *req)
             free(_jpg_buf);
             _jpg_buf = NULL;
         }
+
         if (res != ESP_OK)
         {
             break;
         }
+
         int64_t fr_end = esp_timer_get_time();
 
         int64_t frame_time = fr_end - last_frame;
