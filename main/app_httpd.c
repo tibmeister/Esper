@@ -182,7 +182,6 @@ static esp_err_t stream_handler(httpd_req_t *req)
 
     while (true)
     {
-
         fb = esp_camera_fb_get();
         if (!fb)
         {
@@ -537,7 +536,7 @@ void app_httpd_startup()
 {
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 
-    config.max_uri_handlers = 10;
+    config.max_uri_handlers = 25;
 
     httpd_uri_t index_uri = {
         .uri = "/",
@@ -599,7 +598,7 @@ void app_httpd_startup()
         .handler = reset_handler,
         .user_ctx = NULL};
 
-    ra_filter_init(&ra_filter, 20);
+    ra_filter_init(&ra_filter, 40);
     ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
     ESP_ERROR_CHECK(httpd_start(&camera_httpd, &config));
     httpd_register_uri_handler(camera_httpd, &index_uri);

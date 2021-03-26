@@ -116,8 +116,6 @@ void app_main()
 
   EventBits_t uxBits;
 
-  // xTaskCreate(&heap_debug_task,"heap_debug_task",2048,NULL,5,NULL);
-
   ESP_ERROR_CHECK(esp_event_loop_create_default());
   event_group = xEventGroupCreate();
 
